@@ -202,7 +202,7 @@ function getProjectData() {
         <li>QA 현장에서 반복적인 수동 테스트에 소요되는 시간과 비용 문제를 경험</li>
         <li>기존 도구(Selenium, Cypress)는 코딩 지식이 필수라 비개발 직군의 활용이 어려움</li>
         <li>"클릭만으로 테스트를 만든다"는 콘셉트로 코드 없이 정교한 웹 자동화 테스트를 목표</li>
-        <li>로컬 설계(Electron) + 서버 실행(Playwright) 이원 구조로 CI/CD 통합 SaaS 모델 설계</li>
+        <li>로컬 설계(Electron) + 서버 실행(Playwright) 이원 구조로 CI/CD 통합  모델 설계</li>
       </ul>`,
       techStack: [
         { category: 'Desktop Client', tech: 'Electron 40 + React 19 + TypeScript + Vite 7' },
