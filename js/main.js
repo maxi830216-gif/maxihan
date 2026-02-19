@@ -345,8 +345,6 @@ function getProjectData() {
         'Circle USDC 전체 결제 파이프라인 구축 (Wallet → 결제 → 보상)',
         'wagmi + ConnectKit + viem Web3 지갑 생태계 통합',
         '21개 API 도메인, 12개 DB 모델 정규화 스키마 설계',
-        'Frontend → API → Service → External API → DB 클린 아키텍처',
-        'Docker + Vercel + AWS 멀티 환경 배포 체계 구축',
       ]
     }
   };
