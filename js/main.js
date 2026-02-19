@@ -228,7 +228,7 @@ function getProjectData() {
       achievements: [
         '25종 테스트 액션 타입과 3단계 스마트 셀렉터 엔진 구현',
         'Electron + Rails + Playwright 3티어 아키텍처 설계',
-        'macOS/Windows/Linux 크로스플랫폼 데스크톱 빌드',
+        'macOS 데스크톱 빌드 (Windows/Linux 지원 예정)',
         '스텝별 Pass/Fail + 자동 스크린샷 캡처 리포팅 시스템',
         'API Token 기반 CI/CD 연동 (GitHub Actions, Jenkins)',
         '다중 사용자/조직 관리 Admin 백오피스 구축',
