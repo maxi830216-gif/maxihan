@@ -329,7 +329,6 @@ function getProjectData() {
         { category: 'Database', tech: 'MySQL 8 + Prisma ORM 6' },
         { category: 'Blockchain', tech: 'Circle USDC, Polygon (MATIC-AMOY)' },
         { category: 'Web3', tech: 'wagmi 3, viem 2, ConnectKit, MetaMask SDK' },
-        { category: 'DevOps', tech: 'Docker, Vercel, AWS, Hardhat' },
       ],
       features: [
         { icon: '🔗', title: 'B2B 계정 연동', desc: 'UUID 임시 코드 기반 계정 연동 + S2S 통신 검증' },
