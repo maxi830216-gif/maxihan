@@ -134,45 +134,58 @@ img {
     cursor: none;
   }
 
-  .cursor {
+  .cursor-dot,
+  .cursor-outline {
     position: fixed;
     top: 0;
     left: 0;
-    width: 20px;
-    height: 20px;
-    background: var(--color-accent);
-    border-radius: 50%;
-    pointer-events: none;
     transform: translate(-50%, -50%);
+    border-radius: 50%;
     z-index: 10000;
-    transition: width 0.3s, height 0.3s, background-color 0.3s, mix-blend-mode 0.3s, opacity 0.3s;
-    mix-blend-mode: difference;
+    pointer-events: none;
+  }
+
+  .cursor-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-accent);
+  }
+
+  .cursor-outline {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--color-accent);
+    opacity: 0.6;
+    transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s, opacity 0.3s;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-bg);
+    color: var(--color-white);
     font-size: 0;
     font-weight: 700;
     font-family: var(--font-heading);
     text-transform: uppercase;
   }
 
-  .cursor.hovering {
-    width: 50px;
-    height: 50px;
-    background: rgba(255, 255, 255, 0.9);
-    mix-blend-mode: normal;
+  .cursor-outline.hovering {
+    width: 60px;
+    height: 60px;
+    background: var(--color-accent);
+    opacity: 0.15;
+    border-color: transparent;
   }
 
-  .cursor.hovering-project {
+  .cursor-outline.hovering-project {
     width: 80px;
     height: 80px;
     background: var(--color-accent);
-    mix-blend-mode: normal;
+    opacity: 1;
+    border-color: transparent;
     font-size: 0.9rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   }
 
-  .cursor.hovering-project::after {
+  .cursor-outline.hovering-project::after {
     content: 'VIEW';
   }
 

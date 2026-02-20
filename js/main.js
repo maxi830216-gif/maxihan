@@ -31,22 +31,26 @@ const initTheme = () => {
 
 // --- Custom Cursor ---
 const initCursor = () => {
-  const cursor = document.querySelector('.cursor');
-  if (!cursor) return;
+  const cursorDot = document.querySelector('.cursor-dot');
+  const cursorOutline = document.querySelector('.cursor-outline');
+  if (!cursorDot || !cursorOutline) return;
 
   // Only init if pointer is fine (not touch)
   if (window.matchMedia('(pointer: coarse)').matches) return;
 
   let mouseX = 0;
   let mouseY = 0;
-  let cursorX = 0;
-  let cursorY = 0;
+  let outlineX = 0;
+  let outlineY = 0;
 
-  // Use requestAnimationFrame for smooth cursor movement
+  // Track exact position for the dot, and lerped position for the outline
   const animateCursor = () => {
-    cursorX += (mouseX - cursorX) * 0.2;
-    cursorY += (mouseY - cursorY) * 0.2;
-    cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+    outlineX += (mouseX - outlineX) * 0.15;
+    outlineY += (mouseY - outlineY) * 0.15;
+
+    cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+    cursorOutline.style.transform = `translate3d(${outlineX}px, ${outlineY}px, 0) translate(-50%, -50%)`;
+
     requestAnimationFrame(animateCursor);
   };
   requestAnimationFrame(animateCursor);
@@ -59,15 +63,27 @@ const initCursor = () => {
   // Add hover effects for interactive elements
   const interactiveElements = document.querySelectorAll('a, button, .nav-link, .modal-close');
   interactiveElements.forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+    el.addEventListener('mouseenter', () => {
+      cursorOutline.classList.add('hovering');
+      cursorDot.style.opacity = '0';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursorOutline.classList.remove('hovering');
+      cursorDot.style.opacity = '1';
+    });
   });
 
   // Add special hover effect for project cards
   const projectCards = document.querySelectorAll('.project-card');
   projectCards.forEach(card => {
-    card.addEventListener('mouseenter', () => cursor.classList.add('hovering-project'));
-    card.addEventListener('mouseleave', () => cursor.classList.remove('hovering-project'));
+    card.addEventListener('mouseenter', () => {
+      cursorOutline.classList.add('hovering-project');
+      cursorDot.style.opacity = '0';
+    });
+    card.addEventListener('mouseleave', () => {
+      cursorOutline.classList.remove('hovering-project');
+      cursorDot.style.opacity = '1';
+    });
   });
 };
 
