@@ -2,6 +2,102 @@
    Main JS — Maxihan Profile
    ======================================== */
 
+// --- Dark Mode ---
+const initTheme = () => {
+  const themeToggle = document.getElementById('theme-toggle');
+  if (!themeToggle) return;
+
+  const currentTheme = localStorage.getItem('theme') || 'light';
+  if (currentTheme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    themeToggle.textContent = '☀️';
+  } else {
+    themeToggle.textContent = '🌙';
+  }
+
+  themeToggle.addEventListener('click', () => {
+    let theme = document.documentElement.getAttribute('data-theme');
+    if (theme === 'dark') {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+      themeToggle.textContent = '🌙';
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+      themeToggle.textContent = '☀️';
+    }
+  });
+};
+
+// --- Custom Cursor ---
+const initCursor = () => {
+  const cursor = document.querySelector('.cursor');
+  if (!cursor) return;
+
+  // Only init if pointer is fine (not touch)
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+
+  let mouseX = 0;
+  let mouseY = 0;
+  let cursorX = 0;
+  let cursorY = 0;
+
+  // Use requestAnimationFrame for smooth cursor movement
+  const animateCursor = () => {
+    cursorX += (mouseX - cursorX) * 0.2;
+    cursorY += (mouseY - cursorY) * 0.2;
+    cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+    requestAnimationFrame(animateCursor);
+  };
+  requestAnimationFrame(animateCursor);
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  // Add hover effects for interactive elements
+  const interactiveElements = document.querySelectorAll('a, button, .nav-link, .modal-close');
+  interactiveElements.forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+  });
+
+  // Add special hover effect for project cards
+  const projectCards = document.querySelectorAll('.project-card');
+  projectCards.forEach(card => {
+    card.addEventListener('mouseenter', () => cursor.classList.add('hovering-project'));
+    card.addEventListener('mouseleave', () => cursor.classList.remove('hovering-project'));
+  });
+};
+
+// --- Timeline Scroll Animation ---
+const initTimeline = () => {
+  const timeline = document.querySelector('.timeline');
+  if (!timeline) return;
+
+  const updateTimeline = () => {
+    const rect = timeline.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    let progress = 0;
+    const startPoint = windowHeight * 0.8;
+
+    if (rect.top < startPoint) {
+      const scrollableDistance = rect.height;
+      const scrolled = startPoint - rect.top;
+      progress = Math.min(Math.max(scrolled / scrollableDistance, 0), 1);
+    }
+
+    timeline.style.setProperty('--scroll-height', `${progress * 100}%`);
+  };
+
+  window.addEventListener('scroll', updateTimeline, { passive: true });
+  // Initial calculation
+  setTimeout(updateTimeline, 100);
+};
+
+
 // --- Scroll Reveal ---
 const revealElements = () => {
   const elements = document.querySelectorAll('.reveal');
@@ -351,7 +447,10 @@ function getProjectData() {
 
 // --- Initialize ---
 document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
   revealElements();
   initNavigation();
   initModal();
+  initCursor();
+  initTimeline();
 });
