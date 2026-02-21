@@ -49,6 +49,7 @@ const initCursor = () => {
     outlineY += (mouseY - outlineY) * 0.15;
 
     cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+    // outline is hidden but we keep the logic so it doesn't break if re-enabled later
     cursorOutline.style.transform = `translate3d(${outlineX}px, ${outlineY}px, 0) translate(-50%, -50%)`;
 
     requestAnimationFrame(animateCursor);
@@ -64,12 +65,10 @@ const initCursor = () => {
   const interactiveElements = document.querySelectorAll('a, button, .nav-link, .modal-close');
   interactiveElements.forEach(el => {
     el.addEventListener('mouseenter', () => {
-      cursorOutline.classList.add('hovering');
-      cursorDot.style.opacity = '0';
+      cursorDot.classList.add('hovering');
     });
     el.addEventListener('mouseleave', () => {
-      cursorOutline.classList.remove('hovering');
-      cursorDot.style.opacity = '1';
+      cursorDot.classList.remove('hovering');
     });
   });
 
@@ -77,12 +76,10 @@ const initCursor = () => {
   const projectCards = document.querySelectorAll('.project-card');
   projectCards.forEach(card => {
     card.addEventListener('mouseenter', () => {
-      cursorOutline.classList.add('hovering-project');
-      cursorDot.style.opacity = '0';
+      cursorDot.classList.add('hovering-project');
     });
     card.addEventListener('mouseleave', () => {
-      cursorOutline.classList.remove('hovering-project');
-      cursorDot.style.opacity = '1';
+      cursorDot.classList.remove('hovering-project');
     });
   });
 };

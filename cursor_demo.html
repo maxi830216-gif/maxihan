@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프리미엄 커서 디자인 시안 3종</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+            background-color: #121212;
+            color: #e0e6e6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            cursor: none;
+            /* Hide default cursor */
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            z-index: 10;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1.5rem;
+            z-index: 10;
+        }
+
+        .demo-btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            cursor: none;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-btn.active {
+            background: #2ab7b7;
+            color: #121212;
+            border-color: #2ab7b7;
+        }
+
+        .demo-card {
+            margin-top: 3rem;
+            width: 300px;
+            height: 200px;
+            background: #1e2222;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            z-index: 10;
+            cursor: none;
+            transition: transform 0.3s;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-10px);
+            background: #252a2a;
+        }
+
+        /* =========================================
+       Cursor Base Styles
+       ========================================= */
+        .cursor-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .cursor-dot,
+        .cursor-aux {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        /* =========================================
+       시안 1: Spinner (회전하는 텍스트 링)
+       ========================================= */
+        .theme-spinner .cursor-dot {
+            width: 10px;
+            height: 10px;
+            background: #2ab7b7;
+            border-radius: 50%;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .theme-spinner .cursor-aux {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .theme-spinner .cursor-aux svg {
+            width: 100%;
+            height: 100%;
+            animation: rotate 6s linear infinite;
+            fill: #2ab7b7;
+            letter-spacing: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Hover Effects for Spinner */
+        .theme-spinner.hover-btn .cursor-dot {
+            transform: translate(-50%, -50%) scale(0.5);
+        }
+
+        .theme-spinner.hover-btn .cursor-aux {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+
+        .theme-spinner.hover-card .cursor-dot {
+            transform: translate(-50%, -50%) scale(0);
+        }
+
+        .theme-spinner.hover-card .cursor-aux {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+
+        .theme-spinner.hover-card .cursor-aux svg {
+            fill: #fff;
+        }
+
+        /* =========================================
+       시안 2: Spotlight (다이내믹 반전 & 블렌드 모드) - 수정됨
+       ========================================= */
+        .theme-spotlight .cursor-dot {
+            width: 45px;
+            height: 45px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            mix-blend-mode: color-dodge;
+            opacity: 0.5;
+            transition: width 0.4s cubic-bezier(0.77, 0, 0.175, 1),
+                height 0.4s cubic-bezier(0.77, 0, 0.175, 1),
+                opacity 0.4s, background 0.4s;
+        }
+
+        .theme-spotlight .cursor-aux {
+            display: none;
+        }
+
+        /* Hover Effects for Spotlight */
+        .theme-spotlight.hover-btn .cursor-dot {
+            width: 80px;
+            height: 80px;
+            opacity: 0.8;
+        }
+
+        .theme-spotlight.hover-card .cursor-dot {
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 70%);
+            mix-blend-mode: color-dodge;
+            opacity: 1;
+        }
+
+        /* =========================================
+       시안 3: Minimal Blob (Gooey effect)
+       ========================================= */
+        .theme-blob {
+            filter: url(#goo);
+            /* Applies gooey effect to descendants */
+        }
+
+        .theme-blob .cursor-dot {
+            width: 24px;
+            height: 24px;
+            background: #2ab7b7;
+            border-radius: 50%;
+            transition: transform 0.1s;
+        }
+
+        .theme-blob .cursor-aux {
+            width: 40px;
+            height: 40px;
+            background: #2ab7b7;
+            border-radius: 50%;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Hover Effects for Blob */
+        .theme-blob.hover-btn .cursor-dot {
+            transform: translate(-50%, -50%) scale(1.5);
+            background: #fff;
+        }
+
+        .theme-blob.hover-btn .cursor-aux {
+            transform: translate(-50%, -50%) scale(0.5);
+        }
+
+        .theme-blob.hover-card .cursor-dot {
+            transform: translate(-50%, -50%) scale(3);
+        }
+
+        .theme-blob.hover-card .cursor-aux {
+            transform: translate(-50%, -50%) scale(2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Gooey Filter for Blob Theme -->
+    <svg style="position:absolute; width:0; height:0;">
+        <defs>
+            <filter id="goo">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8"
+                    result="goo" />
+                <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+            </filter>
+        </defs>
+    </svg>
+
+    <div class="cursor-container theme-spinner" id="cursor-container">
+        <div class="cursor-aux" id="cursor-aux">
+            <!-- Spinner SVG Text -->
+            <svg viewBox="0 0 100 100">
+                <path d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" id="circlePath" fill="none" />
+                <text>
+                    <textPath href="#circlePath">CLICK ME • EXPLORE • VIEW •</textPath>
+                </text>
+            </svg>
+        </div>
+        <div class="cursor-dot" id="cursor-dot"></div>
+    </div>
+
+    <h1>프리미엄 커서 타입 선택</h1>
+
+    <div class="btn-group">
+        <button class="demo-btn active" data-theme="theme-spinner">시안 1: Spinner</button>
+        <button class="demo-btn" data-theme="theme-spotlight">시안 2: Spotlight</button>
+        <button class="demo-btn" data-theme="theme-blob">시안 3: Minimal Blob</button>
+    </div>
+
+    <div class="demo-card interactive-card">
+        마우스를 올려보세요 (프로젝트 카드)
+    </div>
+
+    <script>
+        const cursorContainer = document.getElementById('cursor-container');
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorAux = document.getElementById('cursor-aux');
+        const buttons = document.querySelectorAll('.demo-btn');
+        const card = document.querySelector('.interactive-card');
+
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let auxX = mouseX;
+        let auxY = mouseY;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        const animateCursor = () => {
+            // Dot is exact or very fast fast
+            cursorDot.style.left = `${mouseX}px`;
+            cursorDot.style.top = `${mouseY}px`;
+
+            // Aux is lerped (delayed)
+            auxX += (mouseX - auxX) * 0.15;
+            auxY += (mouseY - auxY) * 0.15;
+            cursorAux.style.left = `${auxX}px`;
+            cursorAux.style.top = `${auxY}px`;
+
+            requestAnimationFrame(animateCursor);
+        };
+        requestAnimationFrame(animateCursor);
+
+        // Theme switching
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Reset active
+                buttons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Change theme
+                const theme = btn.dataset.theme;
+                cursorContainer.className = `cursor-container ${theme}`;
+
+                // Reset svg if needed
+                if (theme === 'theme-spinner') {
+                    cursorAux.innerHTML = `<svg viewBox="0 0 100 100">
+            <path d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" id="circlePath" fill="none"/>
+            <text><textPath href="#circlePath">CLICK ME • EXPLORE • VIEW • </textPath></text>
+          </svg>`;
+                } else {
+                    cursorAux.innerHTML = '';
+                }
+            });
+
+            // Hover effects for buttons
+            btn.addEventListener('mouseenter', () => cursorContainer.classList.add('hover-btn'));
+            btn.addEventListener('mouseleave', () => cursorContainer.classList.remove('hover-btn'));
+        });
+
+        // Hover effect for card
+        card.addEventListener('mouseenter', () => cursorContainer.classList.add('hover-card'));
+        card.addEventListener('mouseleave', () => cursorContainer.classList.remove('hover-card'));
+
+    </script>
+</body>
+
+</html>

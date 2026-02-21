@@ -134,59 +134,42 @@ img {
     cursor: none;
   }
 
-  .cursor-dot,
-  .cursor-outline {
+  .cursor-dot {
     position: fixed;
     top: 0;
     left: 0;
-    transform: translate(-50%, -50%);
+    width: 45px;
+    height: 45px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
     border-radius: 50%;
+    transform: translate(-50%, -50%);
     z-index: 10000;
     pointer-events: none;
-  }
-
-  .cursor-dot {
-    width: 8px;
-    height: 8px;
-    background: var(--color-accent);
+    mix-blend-mode: color-dodge;
+    opacity: 0.5;
+    transition: width 0.4s cubic-bezier(0.77, 0, 0.175, 1),
+      height 0.4s cubic-bezier(0.77, 0, 0.175, 1),
+      opacity 0.4s ease,
+      background 0.4s ease,
+      mix-blend-mode 0.4s ease;
   }
 
   .cursor-outline {
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--color-accent);
-    opacity: 0.6;
-    transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s, opacity 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-white);
-    font-size: 0;
-    font-weight: 700;
-    font-family: var(--font-heading);
-    text-transform: uppercase;
+    display: none;
   }
 
-  .cursor-outline.hovering {
-    width: 60px;
-    height: 60px;
-    background: var(--color-accent);
-    opacity: 0.15;
-    border-color: transparent;
-  }
-
-  .cursor-outline.hovering-project {
+  .cursor-dot.hovering {
     width: 80px;
     height: 80px;
-    background: var(--color-accent);
-    opacity: 1;
-    border-color: transparent;
-    font-size: 0.9rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    opacity: 0.8;
   }
 
-  .cursor-outline.hovering-project::after {
-    content: 'VIEW';
+  .cursor-dot.hovering-project {
+    width: 250px;
+    height: 250px;
+    opacity: 1;
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 70%);
+    mix-blend-mode: color-dodge;
   }
 
   /* Make sure links handle custom cursor nicely */
